@@ -1,0 +1,2 @@
+# TrutasOrganizer
+Trutas event organizer

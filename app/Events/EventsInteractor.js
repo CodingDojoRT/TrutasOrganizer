@@ -1,22 +1,25 @@
-var Events = function(dependencies){
+export default class Events {
+	constructor(deps = {}) {
+		this.adapter = deps.adapter || require('./EventsAdapter')
+	}
 
-	this.adapter = dependencies.adapter || require('./EventsAdapter')
+	create(params){
+		let adapter = new this.adapter
+		return adapter.save(params)
+	}
+
+	read(ids) {
+		let adapter = new this.adapter
+		return adapter.read(ids)
+	}
+
+	update(params) {
+		let adapter = new this.adapter
+		return adapter.save(params)
+	}
+
+	delete(ids) {
+		let adapter = new this.adapter
+		return adapter.delete(ids)
+	}
 }
-
-Events.prototype.create = function(params){
-	return this.adapter.save(params)
-}
-
-Events.prototype.read = function(ids) {
-	return this.adapter.read(ids)
-}
-
-Events.prototype.update = function(params) {
-	return this.adapter.save(params)
-}
-
-Events.prototype.delete = function(ids) {
-	return this.adapter.delete(ids)
-}
-
-module.exports = Events

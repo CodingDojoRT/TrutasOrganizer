@@ -4,8 +4,9 @@
   "description": "Trutas event organizer",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test",
-    "watch": "grunt"
+    "start": "babel-node server.js",
+    "test": "mocha --compilers js:babel-core/register --recursive --reporter nyan test",
+    "watch": "mocha --compilers js:babel-core/register --recursive --reporter nyan --watch test"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,10 @@
   },
   "homepage": "https://github.com/CodingDojoRT/TrutasOrganizer#readme",
   "dependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.10.1",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-preset-es2015": "^6.9.0",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13"
   },

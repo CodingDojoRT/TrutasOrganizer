@@ -1,7 +1,8 @@
 import expect from 'expect.js'
-import Events from '../../app/Events/EventsInteractor'
+import Interactor from '../../app/Events/Interactor'
 
 describe('The Events interactor', function(){
+
 	describe('create method', function(){
 
 		it('should try to create an event with the passed parameters', function(done){
@@ -10,9 +11,9 @@ describe('The Events interactor', function(){
 				organizer: 8413791638712,
 				participants: [8413791638712]
 			}
-			var instance = new Events({
-				adapter: class {
-					save (parameters) {
+			var instance = new Interactor({
+				entity: class {
+					create (parameters) {
 						expect(parameters)
 						.to.eql(expectedParameters)
 						done()
@@ -26,9 +27,9 @@ describe('The Events interactor', function(){
 			var expectedResult = {
 				name: "Loreko-san"
 			}
-			var instance = new Events ({
-				adapter: class {
-					save(parameters) {
+			var instance = new Interactor ({
+				entity: class {
+					create(parameters) {
 						return new Promise (function(resolve, reject) {
 							resolve (expectedResult)
 						})
@@ -45,8 +46,8 @@ describe('The Events interactor', function(){
 
 		it('should read the requested event', function(done){
 			var expectedId = 24242469
-			var instance = new Events({
-				adapter: class {
+			var instance = new Interactor({
+				entity: class {
 					read (id) {
 						expect(id).to.eql(expectedId)
 						done()
@@ -62,8 +63,8 @@ describe('The Events interactor', function(){
 				name: "loco",
 				participants: [2756348, 84758743]
 			}
-			var instance = new Events({
-				adapter: class {
+			var instance = new Interactor({
+				entity: class {
 					read () {
 						return new Promise(
 						function(resolve, reject) {
@@ -87,9 +88,9 @@ describe('The Events interactor', function(){
 				organizer: 8413791638712,
 				participants: [8413791638712]
 			}
-			var instance = new Events({
-				adapter: class {
-					save(parameters) {
+			var instance = new Interactor({
+				entity: class {
+					update(parameters) {
 						expect(parameters)
 						.to.eql(expectedParameters)
 						done()
@@ -103,9 +104,9 @@ describe('The Events interactor', function(){
 			var expectedResult = {
 				name: "Loreko-san"
 			}
-			var instance = new Events ({
-				adapter: class {
-					save(parameters) {
+			var instance = new Interactor ({
+				entity: class {
+					update(parameters) {
 						return new Promise (function(resolve, reject) {
 							resolve (expectedResult)
 						})
@@ -122,8 +123,8 @@ describe('The Events interactor', function(){
 
 		it('should try to delete an event', function(done){
 			var expectedIds = 93219321
-			var instance = new Events({
-				adapter: class {
+			var instance = new Interactor({
+				entity: class {
 					delete(ids) {
 						expect(ids)
 						.to.eql(expectedIds)
@@ -138,8 +139,8 @@ describe('The Events interactor', function(){
 			var expectedResult = {
 				name: "Loreko-san"
 			}
-			var instance = new Events ({
-				adapter: class {
+			var instance = new Interactor ({
+				entity: class {
 					delete(parameters) {
 						return new Promise (function(resolve, reject) {
 							resolve (expectedResult)

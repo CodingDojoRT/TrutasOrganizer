@@ -21,6 +21,6 @@ Want to give money to someone? What about us?
 * 8tor  
 "Ai papito"
 * Marcos  
-"Agora eu pego esse cara...<AWP SHOT>...Merda"
+"Agora eu pego esse cara...>AWP SHOT<...Merda"
 * Kaito  
 "Ah mlk"

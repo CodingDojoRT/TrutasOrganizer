@@ -1,4 +1,5 @@
 # Trutas event organizer
+[![Build Status](https://travis-ci.org/CodingDojoRT/TrutasOrganizer.svg?branch=master)](https://travis-ci.org/CodingDojoRT/TrutasOrganizer)
 
 ## Best app ever made
 10 man pvt? Use this zucking app to call everyone!  
@@ -17,7 +18,3 @@ Want to give money to someone? What about us?
 "Escrevi e sai correndo"
 * Bob  
 "Eu faço medicina"
-
-## Something blablabla  
-[![Build Status](https://travis-ci.org/CodingDojoRT/TrutasOrganizer.svg?branch=master)](https://travis-ci.org/CodingDojoRT/TrutasOrganizer)
-Trutas event organizer

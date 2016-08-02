@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node server.js",
-    "test": "mocha --compilers js:babel-core/register --recursive --reporter nyan test",
+    "test": "mocha --compilers js:babel-core/register --recursive --reporter spec test",
     "watch": "mocha --compilers js:babel-core/register --recursive --reporter nyan --watch test"
   },
   "repository": {

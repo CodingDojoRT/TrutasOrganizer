@@ -18,9 +18,9 @@ Want to give money to someone? What about us?
 "Escrevi e sai correndo"
 * Bob  
 "Eu faço medicina"
-* 8tor
+* 8tor  
 "Ai papito"
-* Marcos
+* Marcos  
 "Agora eu pego esse cara...<AWP SHOT>...Merda"
-* Kaito
+* Kaito  
 "Ah mlk"

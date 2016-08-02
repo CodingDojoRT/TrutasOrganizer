@@ -320,14 +320,127 @@ describe('The Events entity', function(){
 				})
 		})
 
+		it('should call adapter update method with received parameter', function () {
+			let expectedResult = {
+				random: 'data'
+			}
+			let params = {...expectedResult}
+
+			let updatedCalled = false
+			let deps = {
+				Adapter: class {
+					update(result) {
+						updatedCalled = true
+						expect(result).to.eql(expectedResult)
+						return new Promise(function(resolve, reject) {
+							resolve()
+						})
+					}
+				}
+			}
+
+			let entity = new EventsEntity(deps)
+			return entity.update(params)
+				.then(() => {
+					expect(updatedCalled).to.be.ok()
+				})
+		})
+
 	})
 
 	describe('read method', function(){
+
+		it('should call adapter read method', function () {
+			let readCalled = false
+			let deps = {
+				Adapter: class {
+					read() {
+						readCalled = true
+						return new Promise(function(resolve, reject) {
+							resolve()
+						})
+					}
+				}
+			}
+
+			let entity = new EventsEntity(deps)
+			return entity.read()
+				.then(() => {
+					expect(readCalled).to.be.ok()
+				})
+		})
+
+		it('should call adapter read method passing received parameters', function () {
+			let expectedResult = [10,20,30]
+			let params = {...expectedResult}
+
+			let readCalled = false
+			let deps = {
+				Adapter: class {
+					read(ids) {
+						readCalled = true
+						expect(ids).to.eql(expectedResult)
+						return new Promise(function(resolve, reject) {
+							resolve()
+						})
+					}
+				}
+			}
+
+			let entity = new EventsEntity(deps)
+			return entity.read(params)
+				.then(() => {
+					expect(readCalled).to.be.ok()
+				})
+		})
 
     })
 
     describe('delete method', function(){
 
+		it('should call adapter delete method', function () {
+			let deleteCalled = false
+			let deps = {
+				Adapter: class {
+					delete() {
+						deleteCalled = true
+						return new Promise(function(resolve, reject) {
+							resolve()
+						})
+					}
+				}
+			}
+
+			let entity = new EventsEntity(deps)
+			return entity.delete()
+				.then(() => {
+					expect(deleteCalled).to.be.ok()
+				})
+		})
+
+		it('should call adapter delete method passing received parameters', function () {
+			let expectedResult = [10,20,30]
+			let params = {...expectedResult}
+
+			let deleteCalled = false
+			let deps = {
+				Adapter: class {
+					delete(ids) {
+						deleteCalled = true
+						expect(ids).to.eql(expectedResult)
+						return new Promise(function(resolve, reject) {
+							resolve()
+						})
+					}
+				}
+			}
+
+			let entity = new EventsEntity(deps)
+			return entity.delete(params)
+				.then(() => {
+					expect(deleteCalled).to.be.ok()
+				})
+		})
     })
 
 

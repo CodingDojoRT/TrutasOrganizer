@@ -56,9 +56,19 @@ export default class EventsEntity {
         })
 	}
 
-	update(){
+	update(body){
         let adapter = new this.Adapter
-        return adapter.update()
+        return adapter.update(body)
+	}
+
+	read(ids){
+		let adapter = new this.Adapter
+		return adapter.read(ids)
+	}
+
+	delete(ids){
+		let adapter = new this.Adapter
+		return adapter.delete(ids)
 	}
 
 }

@@ -5,17 +5,19 @@ export default class EventsInteractor {
 
 	create(params){
 		let entity = new this.entity
-		return entity.create(params)
+		return entity.createValidation(params)
+			.then(() => entity.create(params))
+	}
+
+	update(params) {
+		let entity = new this.entity
+		return entity.updateValidation(params)
+			.then(() => entity.update(params))
 	}
 
 	read(ids) {
 		let entity = new this.entity
 		return entity.read(ids)
-	}
-
-	update(params) {
-		let entity = new this.entity
-		return entity.update(params)
 	}
 
 	delete(ids) {

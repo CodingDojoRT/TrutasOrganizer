@@ -3,7 +3,7 @@ import Joi from 'joi'
 export default class EventsEntity {
 
 	constructor(deps = {}) {
-		this.Adapter = deps.Adapter || require('./Adapter')
+		this.Adapter = deps.Adapter || require('./Adapter').default
 	}
 
 	createValidation(input){

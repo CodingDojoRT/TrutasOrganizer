@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/CodingDojoRT/TrutasOrganizer#readme",
   "dependencies": {
+    "axios": "^0.13.1",
     "babel": "^6.5.2",
     "babel-cli": "^6.10.1",
     "babel-core": "^6.11.4",

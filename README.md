@@ -24,3 +24,5 @@ Want to give money to someone? What about us?
 "Agora eu pego esse cara...>AWP SHOT<...Merda"
 * Kaito  
 "Ah mlk"
+* Uly  
+"Bem dahora da pra marcar varias zueras pq sou da zuera 6sabe"

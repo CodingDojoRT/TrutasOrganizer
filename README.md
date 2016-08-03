@@ -8,6 +8,8 @@ Someone to play in Bob's spot? USE THIS!
 Want to give money to someone? What about us?
 
 ## Reviews
+* Zantsu  
+"Best app 3v3r I use this to find friends to play with"
 * Lorek  
 "I use this app alot to organize my CS:GO games!"
 * Moharu  
@@ -26,3 +28,7 @@ Want to give money to someone? What about us?
 "Ah mlk"
 * Uly  
 "Bem dahora da pra marcar varias zueras pq sou da zuera 6sabe"
+* Carlos  
+_Waiting for his review_
+* Ander  
+"I don't really care..."

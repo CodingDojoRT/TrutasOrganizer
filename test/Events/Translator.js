@@ -3,6 +3,43 @@ import EventsTranslator from '../../app/Events/Translator'
 
 describe('The Events translator', function(){
 
+    describe('_statusCode method', function () {
+
+        it('should return 500 if do not find error', function () {
+            let expectedResult = 500
+
+            let error = {
+                random: 'error'
+            }
+
+            let translator = new EventsTranslator
+            let result = translator._statusCode(error)
+
+            expect(result).to.eql(expectedResult)
+        })
+
+        it('should return error on httpCods', function () {
+            let expectedResult = 700
+
+            let error = {
+                name: 'TEST_ERROR',
+                random: 'error'
+            }
+
+            let deps = {
+                httpCodes: {
+                    TEST_ERROR: expectedResult
+                }
+            }
+
+            let translator = new EventsTranslator(deps)
+            let result = translator._statusCode(error)
+
+            expect(result).to.eql(expectedResult)
+        })
+
+    })
+
 	describe('get method', function () {
 
 		it('should call interactor read method', function () {
@@ -157,6 +194,14 @@ describe('The Events translator', function(){
             translator.get(null, resMock)
 
             expect(readCalled).to.be.ok()
+        })
+
+    })
+
+    describe('post method', function () {
+
+        it('should call adapter create method', function () {
+            
         })
 
     })

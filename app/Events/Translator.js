@@ -5,6 +5,10 @@ export default class EventsEntity {
         this.httpCodes = deps.httpCodes || require('../constants/httpCodes').default
 	}
 
+	_statusCode(error){
+		return error.name ? this.httpCodes[error.name] : 500
+	}
+
 	get(req, res, next){
         let ids = req && req.body && req.body.ids
 
@@ -14,7 +18,7 @@ export default class EventsEntity {
                 res.json(200, result)
             })
             .catch((error) => {
-                let status = error.name ? this.httpCodes[error.name] : 500
+                let status = this._statusCode(error)
                 res.json(status, error)
             })
     }

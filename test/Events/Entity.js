@@ -443,5 +443,4 @@ describe('The Events entity', function(){
 		})
     })
 
-
 })

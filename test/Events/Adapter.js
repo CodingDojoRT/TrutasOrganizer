@@ -84,8 +84,31 @@ describe('The Events adapter', function(){
 
 	describe('update method', function () {
 
-		it('should TOMAR NO CU TO COM SONO AMANHA TERMINO', function () {
+		it('should call http put method passing config.databaseUrl/body.id', function () {
+			let expectedId = 100
+			let expectedResult = config.databaseUrl + '/events/' + expectedId + '.json'
 
+			let body = {
+				id: expectedId
+			}
+			let getCalled = false
+			let deps = {
+				http: {
+					put: (result) => {
+						getCalled = true
+						expect(result).to.eql(expectedResult)
+						return new Promise(function(resolve, reject) {
+							resolve({data:{}})
+						})
+					}
+				}
+			}
+
+			let adapter = new EventsAdapter(deps)
+			return adapter.update(body)
+				.then(() => {
+					expect(getCalled).to.be.ok()
+				})
 		})
 
 	})

@@ -26,4 +26,9 @@ export default class EventsAdapter {
             })
     }
 
+    update(body){
+        let url = config.databaseUrl + '/' + TABLE + '/' + body.id + '.json'
+        return this.http.put(url)
+    }
+
 }

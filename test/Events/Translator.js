@@ -200,9 +200,352 @@ describe('The Events translator', function(){
 
     describe('post method', function () {
 
-        it('should call adapter create method', function () {
-            
+        it('should call interactor create method', function () {
+            let createCalled = false
+            let deps = {
+                Interactor: class {
+                    create(){
+                        createCalled = true
+                        return new Promise(function(resolve, reject) {
+                            resolve()
+                        })
+                    }
+                }
+            }
+
+            let translator = new EventsTranslator(deps)
+            translator.post()
+
+            expect(createCalled).to.be.ok()
+        })
+
+        it('should call interactor create method passing body req', function () {
+            let expectedResult = {
+                random: 'data'
+            }
+
+            let reqMock = {
+                body: {...expectedResult}
+            }
+
+            let createCalled = false
+            let deps = {
+                Interactor: class {
+                    create(result){
+                        createCalled = true
+                        expect(result).to.eql(expectedResult)
+                        return new Promise(function(resolve, reject) {
+                            resolve()
+                        })
+                    }
+                }
+            }
+
+            let translator = new EventsTranslator(deps)
+            translator.post(reqMock)
+
+            expect(createCalled).to.be.ok()
+        })
+
+        it('should res.json with 201 and create response', function (done) {
+            let expectedResult = {
+                random: 'data'
+            }
+
+            let createCalled = false
+            let deps = {
+                Interactor: class {
+                    create(){
+                        createCalled = true
+                        return new Promise(function(resolve, reject) {
+                            resolve(expectedResult)
+                        })
+                    }
+                }
+            }
+
+            let resMock = {
+                json: (status, body) => {
+                    expect(status).to.eql(201)
+                    expect(body).to.eql(expectedResult)
+                    done()
+                }
+            }
+
+            let translator = new EventsTranslator(deps)
+            translator.post(null, resMock)
+
+            expect(createCalled).to.be.ok()
+        })
+
+        it('should call _statusCode and use its return to res.json', function (done) {
+            let expectedErrorCode = 560
+            let expectedError = {
+                random: 'data'
+            }
+
+            let createCalled = false
+            let deps = {
+                Interactor: class {
+                    create(){
+                        createCalled = true
+                        return new Promise(function(resolve, reject) {
+                            reject(expectedError)
+                        })
+                    }
+                }
+            }
+
+            let resMock = {
+                json: (status, body) => {
+                    expect(status).to.eql(expectedErrorCode)
+                    expect(body).to.eql(expectedError)
+                    done()
+                }
+            }
+
+            let translator = new EventsTranslator(deps)
+            translator._statusCode = () => expectedErrorCode
+            translator.post(null, resMock)
+
+            expect(createCalled).to.be.ok()
         })
 
     })
+
+    describe('put method', function () {
+
+        it('should call interactor update method', function () {
+            let updateCalled = false
+            let deps = {
+                Interactor: class {
+                    update(){
+                        updateCalled = true
+                        return new Promise(function(resolve, reject) {
+                            resolve()
+                        })
+                    }
+                }
+            }
+
+            let translator = new EventsTranslator(deps)
+            translator.put()
+
+            expect(updateCalled).to.be.ok()
+        })
+
+        it('should call interactor update method passing body req', function () {
+            let expectedResult = {
+                random: 'data'
+            }
+
+            let reqMock = {
+                body: {...expectedResult}
+            }
+
+            let updateCalled = false
+            let deps = {
+                Interactor: class {
+                    update(result){
+                        updateCalled = true
+                        expect(result).to.eql(expectedResult)
+                        return new Promise(function(resolve, reject) {
+                            resolve()
+                        })
+                    }
+                }
+            }
+
+            let translator = new EventsTranslator(deps)
+            translator.put(reqMock)
+
+            expect(updateCalled).to.be.ok()
+        })
+
+        it('should res.json with 200 and update response', function (done) {
+            let expectedResult = {
+                random: 'data'
+            }
+
+            let updateCalled = false
+            let deps = {
+                Interactor: class {
+                    update(){
+                        updateCalled = true
+                        return new Promise(function(resolve, reject) {
+                            resolve(expectedResult)
+                        })
+                    }
+                }
+            }
+
+            let resMock = {
+                json: (status, body) => {
+                    expect(status).to.eql(200)
+                    expect(body).to.eql(expectedResult)
+                    done()
+                }
+            }
+
+            let translator = new EventsTranslator(deps)
+            translator.put(null, resMock)
+
+            expect(updateCalled).to.be.ok()
+        })
+
+        it('should call _statusCode and use its return to res.json', function (done) {
+            let expectedErrorCode = 560
+            let expectedError = {
+                random: 'data'
+            }
+
+            let updateCalled = false
+            let deps = {
+                Interactor: class {
+                    update(){
+                        updateCalled = true
+                        return new Promise(function(resolve, reject) {
+                            reject(expectedError)
+                        })
+                    }
+                }
+            }
+
+            let resMock = {
+                json: (status, body) => {
+                    expect(status).to.eql(expectedErrorCode)
+                    expect(body).to.eql(expectedError)
+                    done()
+                }
+            }
+
+            let translator = new EventsTranslator(deps)
+            translator._statusCode = () => expectedErrorCode
+            translator.put(null, resMock)
+
+            expect(updateCalled).to.be.ok()
+        })
+
+    })
+
+    describe('delete method', function () {
+
+		it('should call interactor delete method', function () {
+            let deleteCalled = false
+            let deps = {
+                Interactor: class {
+                    delete(){
+                        deleteCalled = true
+                        return new Promise(function(resolve, reject) {
+                            resolve()
+                        })
+                    }
+                }
+            }
+
+            let translator = new EventsTranslator(deps)
+
+            translator.delete()
+
+            expect(deleteCalled).to.be.ok()
+        })
+
+		it('should call interactor delete method with body.ids', function () {
+            let expectedResult = [10,20,30]
+
+            let reqMock = {
+                body: {
+                    ids: [...expectedResult]
+                }
+            }
+
+            let deleteCalled = false
+            let deps = {
+                Interactor: class {
+                    delete(ids){
+                        expect(ids).to.eql(expectedResult)
+                        deleteCalled = true
+                        return new Promise(function(resolve, reject) {
+                            resolve()
+                        })
+                    }
+                }
+            }
+
+            let translator = new EventsTranslator(deps)
+
+            translator.delete(reqMock)
+
+            expect(deleteCalled).to.be.ok()
+        })
+
+		it('should call res.json with 200 and delete resolve', function (done) {
+            let expectedResult = [
+                {database: 'result'},
+                {database: 'result'}
+            ]
+            let result = [...expectedResult]
+
+            let deleteCalled = false
+            let deps = {
+                Interactor: class {
+                    delete(){
+                        deleteCalled = true
+                        return new Promise(function(resolve, reject) {
+                            resolve(result)
+                        })
+                    }
+                }
+            }
+
+            let resMock = {
+                json: (status, body) => {
+                    expect(status).to.eql(200)
+                    expect(body).to.eql(expectedResult)
+                    done()
+                }
+            }
+
+            let translator = new EventsTranslator(deps)
+
+            translator.delete(null, resMock)
+
+            expect(deleteCalled).to.be.ok()
+        })
+
+        it('should call _statusCode and use its return to res.json', function (done) {
+            let expectedErrorCode = 560
+            let expectedError = {
+                random: 'data'
+            }
+
+            let deleteCalled = false
+            let deps = {
+                Interactor: class {
+                    delete(){
+                        deleteCalled = true
+                        return new Promise(function(resolve, reject) {
+                            reject(expectedError)
+                        })
+                    }
+                }
+            }
+
+            let resMock = {
+                json: (status, body) => {
+                    expect(status).to.eql(expectedErrorCode)
+                    expect(body).to.eql(expectedError)
+                    done()
+                }
+            }
+
+            let translator = new EventsTranslator(deps)
+            translator._statusCode = () => expectedErrorCode
+            translator.delete(null, resMock)
+
+            expect(deleteCalled).to.be.ok()
+        })
+
+    })
+
 })

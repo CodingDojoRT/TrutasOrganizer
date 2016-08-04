@@ -82,4 +82,12 @@ describe('The Events adapter', function(){
 
     })
 
+	describe('update method', function () {
+
+		it('should TOMAR NO CU TO COM SONO AMANHA TERMINO', function () {
+
+		})
+
+	})
+
 })

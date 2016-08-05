@@ -1,4 +1,4 @@
-export default class EventsEntity {
+export default class EventsTranslator {
 
 	constructor(deps = {}) {
 		this.Interactor = deps.Interactor || require('./Interactor').default

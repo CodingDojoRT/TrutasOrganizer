@@ -84,19 +84,29 @@ describe('The Events adapter', function(){
 
 	describe('update method', function () {
 
-		it('should call http put method passing config.databaseUrl/body.id', function () {
+		it('should call http put method passing config.databaseUrl/body.id and a {body} as parameters', function () {
 			let expectedId = 100
 			let expectedResult = config.databaseUrl + '/events/' + expectedId + '.json'
 
+			let expectedBody = {
+				game: 'test_game',
+				participants: [100],
+				time: 123456
+			}
+
 			let body = {
-				id: expectedId
+				id: expectedId,
+				game: 'test_game',
+				participants: [100],
+				time: 123456
 			}
 			let getCalled = false
 			let deps = {
 				http: {
-					put: (result) => {
+					put: (result, opt) => {
 						getCalled = true
 						expect(result).to.eql(expectedResult)
+						expect(opt.body).to.eql(expectedBody)
 						return new Promise(function(resolve, reject) {
 							resolve({data:{}})
 						})
@@ -112,5 +122,45 @@ describe('The Events adapter', function(){
 		})
 
 	})
+
+	describe('save method', function () {
+
+		it('should call http post method passing config.databaseUrl and a {body} as parameters', function () {
+			let expectedResult = config.databaseUrl + '/events.json'
+
+			let expectedBody = {
+				game: 'test_game',
+				participants: [100],
+				time: 123456
+			}
+
+			let body = {
+				game: 'test_game',
+				participants: [100],
+				time: 123456
+			}
+			let getCalled = false
+			let deps = {
+				http: {
+					post: (result, opt) => {
+						getCalled = true
+						expect(result).to.eql(expectedResult)
+						expect(opt.body).to.eql(expectedBody)
+						return new Promise(function(resolve, reject) {
+							resolve({data:{}})
+						})
+					}
+				}
+			}
+
+			let adapter = new EventsAdapter(deps)
+			return adapter.save(body)
+				.then(() => {
+					expect(getCalled).to.be.ok()
+				})
+		})
+
+	})
+
 
 })

@@ -36,7 +36,7 @@ export default class EventsEntity {
 	updateValidation(input){
         return new Promise((resolve, reject) => {
             let schema = Joi.object().keys({
-				id: Joi.number().required(),
+				id: Joi.string().required(),
                 game: Joi.string().optional(),
 				time: Joi.number().optional(),
                 participants: Joi.array().min(1).items(

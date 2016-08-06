@@ -171,7 +171,7 @@ describe('The Events entity', function(){
 
 		it('should accept id, game, time and participants', function () {
 			let params = {
-				id: 100,
+				id: '100',
 				game: 'Game_test',
 				participants: [10,20,30],
 				time: 1234567
@@ -208,7 +208,7 @@ describe('The Events entity', function(){
 
 		it('should accept without game', function () {
 			let params = {
-				id: 100,
+				id: '100',
 				participants: [10,20,30],
 				time: 1234567
 			}
@@ -223,7 +223,7 @@ describe('The Events entity', function(){
 
 		it('should accept without time', function () {
 			let params = {
-				id: 100,
+				id: '100',
 				game: 'Game_test',
 				participants: [10,20,30]
 			}
@@ -238,7 +238,7 @@ describe('The Events entity', function(){
 
 		it('should accept without participants', function () {
 			let params = {
-				id: 100,
+				id: '100',
 				game: 'Game_test',
 				time: 1234567
 			}
@@ -253,7 +253,7 @@ describe('The Events entity', function(){
 
 		it('should reject with empty participants', function () {
 			let params = {
-				id: 100,
+				id: '100',
 				game: 'Game_test',
 				participants: [],
 				time: 1234567
@@ -275,7 +275,7 @@ describe('The Events entity', function(){
 
 		it('should reject with random parameter', function () {
 			let params = {
-				id: 100,
+				id: '100',
 				game: 'Game_test',
 				participants: [10,20,30],
 				time: 1234567,

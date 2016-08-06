@@ -12,7 +12,14 @@ export default class EventsInteractor {
 	update(params) {
 		let entity = new this.entity
 		return entity.updateValidation(params)
-			.then(() => entity.update(params))
+			.then(() => entity.read([params.id]))
+			.then((dbData) => {
+				let dt = {
+					...dbData,
+					...params
+				}
+				return entity.update(dt)
+			})
 	}
 
 	read(ids) {

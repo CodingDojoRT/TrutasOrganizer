@@ -82,13 +82,23 @@ describe('The Events interactor', function(){
 
 	describe('update method', function(){
 
-		it('should call entity validation and update methods with the received parameters', function(){
+		it('should call entity validation, read and update methods with the received parameters', function(){
 			let expectedParameters = {
+				id: 0,
 				name: "JO:GO DAS 22",
 				organizer: 8413791638712,
 				participants: [8413791638712]
 			}
+
+			let readResult = {
+				id: 0,
+				name: "JO:GO DAS 22",
+				organizer: 8413791638712,
+				participants: [8413791638712]
+			}
+
 			let validationCalled = false
+			let readCalled = false
 			let updateCalled = false
 			let deps = {
 				entity: class {
@@ -97,6 +107,13 @@ describe('The Events interactor', function(){
 						expect(parameters).to.eql(expectedParameters)
 						return new Promise(function(resolve, reject) {
 							resolve()
+						})
+					}
+					read(params){
+						readCalled = true
+						expect(params).to.eql([expectedParameters.id])
+						return new Promise(function(resolve, reject) {
+							resolve(readResult)
 						})
 					}
 					update(parameters) {
@@ -112,44 +129,65 @@ describe('The Events interactor', function(){
 			return instance.update(expectedParameters)
 				.then(() => {
 					expect(validationCalled).to.be.ok()
+					expect(readCalled).to.be.ok()
 					expect(updateCalled).to.be.ok()
 				})
 		})
 
-		it ('should return the result of the update event event',function (){
-			let expectedParameters = {
-				name: "JO:GO DAS 22",
-				organizer: 8413791638712,
-				participants: [8413791638712]
-			}
+		it('should update the data received from read', function(){
 			let expectedResult = {
-				name: 'Lorek-san'
+				id: 0,
+				name: "TEST_NAME",
+				organizer: 1,
+				participants: [1,2]
 			}
+
+			let body = {
+				id: 0,
+				name: "TEST_NAME",
+				participants: [1,2]
+			}
+
+			let readResult = {
+				id: 0,
+				name: "JO:GO DAS 22",
+				organizer: 1,
+				participants: [1]
+			}
+
 			let validationCalled = false
+			let readCalled = false
 			let updateCalled = false
 			let deps = {
 				entity: class {
 					updateValidation(parameters) {
 						validationCalled = true
-						expect(parameters).to.eql(expectedParameters)
+						expect(parameters).to.eql(body)
 						return new Promise(function(resolve, reject) {
 							resolve()
 						})
 					}
+					read(params){
+						readCalled = true
+						expect(params).to.eql([body.id])
+						return new Promise(function(resolve, reject) {
+							resolve(readResult)
+						})
+					}
 					update(parameters) {
 						updateCalled = true
-						expect(parameters).to.eql(expectedParameters)
+						expect(parameters).to.eql(expectedResult)
 						return new Promise(function(resolve, reject) {
-							resolve(expectedResult)
+							resolve()
 						})
 					}
 				}
 			}
 			let instance = new Interactor(deps)
-			return instance.update(expectedParameters)
-				.then((result) => {
-					expect(result).to.eql(expectedResult)
+			return instance.update(body)
+				.then(() => {
 					expect(validationCalled).to.be.ok()
+					expect(readCalled).to.be.ok()
 					expect(updateCalled).to.be.ok()
 				})
 		})

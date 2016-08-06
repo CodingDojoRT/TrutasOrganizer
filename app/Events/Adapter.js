@@ -28,7 +28,13 @@ export default class EventsAdapter {
 
     update(body){
         let url = config.databaseUrl + '/' + TABLE + '/' + body.id + '.json'
-        return this.http.put(url)
+		delete body.id
+        return this.http.put(url, {body})
+    }
+
+    save(body){
+        let url = config.databaseUrl + '/' + TABLE + '.json'
+        return this.http.post(url, {body})
     }
 
 }

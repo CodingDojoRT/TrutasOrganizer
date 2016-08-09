@@ -22,13 +22,13 @@ server.get('/events', function (req, res, next) {
     let eventsTraslator = new EventsTranslator
     eventsTraslator.get(req, res, next)
 })
-server.put('/events', function (req, res, next) {
-    let eventsTraslator = new EventsTranslator
-    eventsTraslator.put(req, res, next)
-})
 server.post('/events', function (req, res, next) {
     let eventsTraslator = new EventsTranslator
     eventsTraslator.post(req, res, next)
+})
+server.put('/events', function (req, res, next) {
+    let eventsTraslator = new EventsTranslator
+    eventsTraslator.put(req, res, next)
 })
 
 server.listen(config.port, function(){

@@ -63,7 +63,13 @@ export default class EventsEntity {
 
 	read(ids){
 		let adapter = new this.Adapter
-		return adapter.read(ids)
+		if(!ids || ids.length === 0){
+			return adapter.read()
+		}
+		switch(ids.length){
+			case 1:
+				return adapter.readOne(ids[0])
+		}
 	}
 
 	delete(ids){

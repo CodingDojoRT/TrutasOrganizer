@@ -190,11 +190,11 @@ describe('The Events adapter', function(){
 				participants: [100],
 				time: 123456
 			}
-			let getCalled = false
+			let updateCalled = false
 			let deps = {
 				http: {
 					put: (result, opt) => {
-						getCalled = true
+						updateCalled = true
 						expect(result).to.eql(expectedResult)
 						expect(opt).to.eql(expectedBody)
 						return new Promise(function(resolve, reject) {
@@ -207,7 +207,7 @@ describe('The Events adapter', function(){
 			let adapter = new EventsAdapter(deps)
 			return adapter.update(body)
 				.then(() => {
-					expect(getCalled).to.be.ok()
+					expect(updateCalled).to.be.ok()
 				})
 		})
 
@@ -235,11 +235,11 @@ describe('The Events adapter', function(){
 				data: {...expectedResult}
 			}
 
-			let getCalled = false
+			let updateCalled = false
 			let deps = {
 				http: {
 					put: (url, opt) => {
-						getCalled = true
+						updateCalled = true
 						expect(url).to.eql(expectedUrl)
 						expect(opt).to.eql(expectedBody)
 						return new Promise(function(resolve, reject) {
@@ -253,7 +253,7 @@ describe('The Events adapter', function(){
 			return adapter.update(body)
 				.then((result) => {
 					expect(result).to.eql(expectedResult)
-					expect(getCalled).to.be.ok()
+					expect(updateCalled).to.be.ok()
 				})
 		})
 
@@ -275,11 +275,11 @@ describe('The Events adapter', function(){
 				participants: [100],
 				time: 123456
 			}
-			let getCalled = false
+			let saveCalled = false
 			let deps = {
 				http: {
 					post: (result, opt) => {
-						getCalled = true
+						saveCalled = true
 						expect(result).to.eql(expectedResult)
 						expect(opt).to.eql(expectedBody)
 						return new Promise(function(resolve, reject) {
@@ -292,7 +292,7 @@ describe('The Events adapter', function(){
 			let adapter = new EventsAdapter(deps)
 			return adapter.save(body)
 				.then(() => {
-					expect(getCalled).to.be.ok()
+					expect(saveCalled).to.be.ok()
 				})
 		})
 
@@ -318,11 +318,11 @@ describe('The Events adapter', function(){
 				data: {...expectedResult}
 			}
 
-			let getCalled = false
+			let saveCalled = false
 			let deps = {
 				http: {
 					post: (url, opt) => {
-						getCalled = true
+						saveCalled = true
 						expect(url).to.eql(expectedUrl)
 						expect(opt).to.eql(expectedBody)
 						return new Promise(function(resolve, reject) {
@@ -336,11 +336,94 @@ describe('The Events adapter', function(){
 			return adapter.save(body)
 				.then((result) => {
 					expect()
-					expect(getCalled).to.be.ok()
+					expect(saveCalled).to.be.ok()
 				})
 		})
 
 	})
 
+	describe('delete method', function () {
+
+		it('should call http delete method passing config.databaseUrl + received id', function () {
+			let id = '-ADSDHJSJ'
+			let expectedUrl = config.databaseUrl + '/events/' + id + '.json'
+
+			let deleteCalled = false
+			let deps = {
+				http: {
+					delete: (url) => {
+						deleteCalled = true
+						expect(url).to.eql(expectedUrl)
+						return new Promise(function(resolve, reject) {
+							resolve({data:{}})
+						})
+					}
+				}
+			}
+
+			let adapter = new EventsAdapter(deps)
+			return adapter.delete(id)
+				.then(() => {
+					expect(deleteCalled).to.be.ok()
+				})
+		})
+
+		it('should throw if no ID is passed', function () {
+			let deleteCalled = false
+			let deps = {
+				http: {
+					delete: () => {
+						deleteCalled = true
+						return new Promise(function(resolve, reject) {
+							resolve({data:{}})
+						})
+					}
+				}
+			}
+
+			let adapter = new EventsAdapter(deps)
+			return adapter.delete()
+				.then(() => {
+					expect().fail()
+				})
+				.catch((error) => {
+					expect(error.name).to.eql('ServerError')
+					expect(deleteCalled).not.to.be.ok()
+				})
+		})
+
+		it('should resolve with dbResult.data', function () {
+			let id = '-ADSDHJSJ'
+			let expectedUrl = config.databaseUrl + '/events/' + id + '.json'
+			let expectedResult = {
+				name: '-ADSDHJSJ'
+			}
+
+			let dbResult = {
+				data: {...expectedResult}
+			}
+
+			let deleteCalled = false
+			let deps = {
+				http: {
+					delete: (url) => {
+						deleteCalled = true
+						expect(url).to.eql(expectedUrl)
+						return new Promise(function(resolve, reject) {
+							resolve(dbResult)
+						})
+					}
+				}
+			}
+
+			let adapter = new EventsAdapter(deps)
+			return adapter.delete(id)
+				.then((result) => {
+					expect(result).to.eql(expectedResult)
+					expect(deleteCalled).to.be.ok()
+				})
+		})
+
+	})
 
 })

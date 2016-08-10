@@ -59,4 +59,16 @@ export default class EventsAdapter {
 			.then((res) => res.data)
     }
 
+    delete(id){
+		if(!id){
+			throw {
+				name: 'ServerError',
+				message: 'Id not defined in delete method'
+			}
+		}
+		let url = config.databaseUrl + '/' + TABLE + '/' + id + '.json'
+        return this.http.delete(url)
+			.then((res) => res.data)
+    }
+
 }

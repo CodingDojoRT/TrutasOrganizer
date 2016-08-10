@@ -370,16 +370,21 @@ describe('The Events entity', function(){
 				})
 		})
 
-		it('should call adapter read method passing received parameters', function () {
-			let expectedResult = [10,20,30]
-			let params = {...expectedResult}
+		it('should call readOne method if parameters got only one id', function () {
+			let params = [10]
 
 			let readCalled = false
+			let readOneCalled = false
 			let deps = {
 				Adapter: class {
-					read(ids) {
+					readOne() {
+						readOneCalled = true
+						return new Promise(function(resolve, reject) {
+							resolve()
+						})
+					}
+					read() {
 						readCalled = true
-						expect(ids).to.eql(expectedResult)
 						return new Promise(function(resolve, reject) {
 							resolve()
 						})
@@ -390,7 +395,8 @@ describe('The Events entity', function(){
 			let entity = new EventsEntity(deps)
 			return entity.read(params)
 				.then(() => {
-					expect(readCalled).to.be.ok()
+					expect(readOneCalled).to.be.ok()
+					expect(readCalled).not.to.be.ok()
 				})
 		})
 

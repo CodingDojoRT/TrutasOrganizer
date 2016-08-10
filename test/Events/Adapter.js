@@ -368,30 +368,6 @@ describe('The Events adapter', function(){
 				})
 		})
 
-		it('should throw if no ID is passed', function () {
-			let deleteCalled = false
-			let deps = {
-				http: {
-					delete: () => {
-						deleteCalled = true
-						return new Promise(function(resolve, reject) {
-							resolve({data:{}})
-						})
-					}
-				}
-			}
-
-			let adapter = new EventsAdapter(deps)
-			return adapter.delete()
-				.then(() => {
-					expect().fail()
-				})
-				.catch((error) => {
-					expect(error.name).to.eql('ServerError')
-					expect(deleteCalled).not.to.be.ok()
-				})
-		})
-
 		it('should resolve with dbResult.data', function () {
 			let id = '-ADSDHJSJ'
 			let expectedUrl = config.databaseUrl + '/events/' + id + '.json'

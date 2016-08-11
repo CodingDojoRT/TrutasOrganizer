@@ -451,11 +451,11 @@ describe('The Events translator', function(){
         })
 
 		it('should call interactor delete method with body.ids', function () {
-            let expectedResult = [10,20,30]
+            let expectedResult = 10
 
             let reqMock = {
                 body: {
-                    ids: [...expectedResult]
+                    id: 10
                 }
             }
 

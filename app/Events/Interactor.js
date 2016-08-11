@@ -27,8 +27,8 @@ export default class EventsInteractor {
 		return entity.read(ids)
 	}
 
-	delete(ids) {
+	delete(id) {
 		let entity = new this.entity
-		return entity.delete(ids)
+		return entity.delete(id)
 	}
 }

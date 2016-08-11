@@ -234,17 +234,17 @@ describe('The Events interactor', function(){
 	describe('delete method', function(){
 
 		it('should try to delete an event', function(done){
-			let expectedIds = 93219321
+			let expectedId = 93219321
 			let instance = new Interactor({
 				entity: class {
 					delete(ids) {
 						expect(ids)
-						.to.eql(expectedIds)
+						.to.eql(expectedId)
 						done()
 					}
 				}
 			})
-			instance.delete(expectedIds)
+			instance.delete(expectedId)
 		})
 
 		it ('should return the result of the delete event event',function (){

@@ -72,9 +72,9 @@ export default class EventsEntity {
 		}
 	}
 
-	delete(ids){
+	delete(id){
 		let adapter = new this.Adapter
-		return adapter.delete(ids)
+		return adapter.delete(id)
 	}
 
 }

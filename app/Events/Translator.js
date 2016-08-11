@@ -52,10 +52,10 @@ export default class EventsTranslator {
 	}
 
 	delete(req, res, next){
-        let ids = req && req.body && req.body.ids
+        let id = req && req.body && req.body.id
 
         let interactor = new this.Interactor
-        interactor.delete(ids)
+        interactor.delete(id)
             .then((result) => {
                 res.json(200, result)
             })

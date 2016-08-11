@@ -425,15 +425,15 @@ describe('The Events entity', function(){
 		})
 
 		it('should call adapter delete method passing received parameters', function () {
-			let expectedResult = [10,20,30]
-			let params = {...expectedResult}
+			let expectedResult = 10
+			let params = 10
 
 			let deleteCalled = false
 			let deps = {
 				Adapter: class {
-					delete(ids) {
+					delete(id) {
 						deleteCalled = true
-						expect(ids).to.eql(expectedResult)
+						expect(id).to.eql(expectedResult)
 						return new Promise(function(resolve, reject) {
 							resolve()
 						})
